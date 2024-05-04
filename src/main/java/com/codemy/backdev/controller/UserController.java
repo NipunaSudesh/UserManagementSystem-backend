@@ -1,5 +1,6 @@
 package com.codemy.backdev.controller;
 
+import com.codemy.backdev.exception.UserNotFoundException;
 import com.codemy.backdev.model.User;
 import com.codemy.backdev.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ public class UserController {
     @GetMapping("/users")
     public List<User> allUsers(){
         return userRepository.findAll();
+    }
+
+    @GetMapping("/user/{id}")
+    User getUserById(@PathVariable long id){
+        return userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
     }
 
 }
